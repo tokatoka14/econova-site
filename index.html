@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECO DRIVER — ECONOVA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Noto+Sans+Georgian:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060B09; --bg2:#0A1310; --card:#0E1A15; --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+  --text:#EEF5F0; --muted:#97A89F; --dim:#6E8077;
+  --lime:#B7F45F; --lime2:#8FE03A; --mint:#5CF2C4; --ink:#07110B;
+  --r:20px; --max:1280px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:400 16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,.display{font-family:"Space Grotesk",Inter,sans-serif;letter-spacing:-.03em;line-height:1.02;font-weight:600}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 32px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:600 12px/1 Inter;letter-spacing:.18em;text-transform:uppercase;color:var(--lime)}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 14px var(--lime)}
+.accent{color:var(--lime)}
+.btn{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 26px;border-radius:999px;font-weight:600;font-size:15px;transition:.25s}
+.btn svg{width:18px;height:18px;transition:transform .25s}
+.btn:hover svg{transform:translate(3px,-3px)}
+.btn-lime{background:var(--lime);color:var(--ink)}
+.btn-lime:hover{background:#c9ff7a;box-shadow:0 10px 40px -8px rgba(183,244,95,.55)}
+.btn-ghost{border:1px solid var(--line2);color:var(--text)}
+.btn-ghost:hover{border-color:var(--lime);color:var(--lime)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* top bar + nav */
+.topbar{background:var(--lime);color:var(--ink);font-size:13px;font-weight:600}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:40px;gap:16px}
+.topbar a{display:inline-flex;gap:6px;align-items:center}
+.nav{position:sticky;top:0;z-index:50;background:rgba(6,11,9,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:78px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(183,244,95,.2),rgba(183,244,95,.02));border:1px solid rgba(183,244,95,.35)}
+.logo b{font:700 18px/1 "Space Grotesk";letter-spacing:.08em}
+.logo small{display:block;font-size:10px;letter-spacing:.22em;color:var(--dim);margin-top:4px}
+.menu{display:flex;gap:6px}
+.menu a{padding:10px 16px;border-radius:999px;font-size:14px;color:var(--muted);transition:.2s}
+.menu a:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.nav-cta{height:46px;font-size:14px;padding:0 20px}
+.burger{display:none;width:46px;height:46px;border-radius:50%;border:1px solid var(--line2);place-items:center}
+.mobile{display:none;flex-direction:column;padding:8px 32px 24px;gap:4px;border-top:1px solid var(--line)}
+.mobile a{padding:12px 0;border-bottom:1px solid var(--line);color:var(--muted)}
+.mobile.open{display:flex}
+
+/* hero */
+.hero{position:relative;padding:90px 0 70px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-20% -10% auto auto;width:900px;height:900px;background:radial-gradient(circle,rgba(183,244,95,.13),transparent 60%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.02fr 1fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(46px,5.6vw,84px);margin:26px 0 28px;text-wrap:balance}
+/* language + Georgian typography */
+.lang{height:46px;min-width:64px;padding:0 14px;border-radius:999px;border:1px solid var(--line2);font:600 13px Inter;letter-spacing:.06em;color:var(--text);display:inline-flex;align-items:center;gap:8px;transition:.2s}
+.lang:hover{border-color:var(--lime);color:var(--lime)}
+.nav-right{display:flex;align-items:center;gap:10px}
+html[lang=ka] body{font-family:var(--ka-body,"Noto Sans Georgian"),Inter,sans-serif}
+html[lang=ka] h1,html[lang=ka] h2,html[lang=ka] h3,html[lang=ka] h4,html[lang=ka] .display,html[lang=ka] .stat .v,html[lang=ka] .pillar b{font-family:var(--ka-head,"Noto Sans Georgian"),"Space Grotesk",sans-serif;letter-spacing:-.01em;line-height:1.15}
+html[lang=ka] *{text-transform:none!important}
+html[lang=ka] .eyebrow{letter-spacing:.04em;font-size:13px}
+html[lang=ka] .hero h1{font-size:clamp(40px,4.6vw,68px)}
+html[lang=ka] .head h2,html[lang=ka] .mission h2,html[lang=ka] .news h2,html[lang=ka] .tech-hero h2{font-size:clamp(34px,4vw,58px)}
+html[lang=ka] .mcard h3{font-size:26px}
+@font-face{font-family:"MS Ring";src:url("msring.woff2") format("woff2");font-display:swap;unicode-range:U+10A0-10FF,U+1C90-1CBF,U+2D00-2D2F}
+@font-face{font-family:"ALK Katerina";src:url("katerina.woff2") format("woff2");font-display:swap}
+html[lang=ka] h1,html[lang=ka] h2,html[lang=ka] .stat .v,html[lang=ka] .pillar b{font-family:"MS Ring","Space Grotesk",sans-serif;font-weight:400;letter-spacing:0;line-height:1.32}
+html[lang=ka] .head h2,html[lang=ka] .hero h1,html[lang=ka] .tech-hero h2,html[lang=ka] .mission h2,html[lang=ka] .news h2{margin-top:28px}
+html[lang=ka] .eyebrow{line-height:1.4}
+html[lang=ka] h3,html[lang=ka] h4,html[lang=ka] h5,html[lang=ka] .eyebrow,html[lang=ka] .menu a,html[lang=ka] .mobile a,html[lang=ka] .btn,html[lang=ka] .lang,html[lang=ka] .filters button,html[lang=ka] .badge,html[lang=ka] .type,html[lang=ka] .stat .l,html[lang=ka] .logo small,html[lang=ka] .topbar,html[lang=ka] .tabs button,html[lang=ka] .link,html[lang=ka] .chip,html[lang=ka] .feat li,html[lang=ka] .specs div,html[lang=ka] .price span,html[lang=ka] .dstats span,html[lang=ka] .form label,html[lang=ka] .hero-stats span,html[lang=ka] .marquee span,html[lang=ka] .social b{font-family:"ALK Katerina","Noto Sans Georgian",sans-serif;font-weight:400;letter-spacing:.02em}
+html[lang=ka] .menu a{font-size:18px;padding:8px 14px}
+html[lang=ka] .btn{font-size:18px}
+html[lang=ka] .eyebrow{font-size:17px}
+html[lang=ka] .logo small{font-size:12px;letter-spacing:.06em}
+html[lang=ka] .topbar{font-size:16px}
+html[lang=ka] .mcard h3,html[lang=ka] .detail h3{font-family:"ALK Katerina","Space Grotesk",sans-serif;font-size:32px;letter-spacing:.02em}
+html[lang=ka] .feat h3,html[lang=ka] .pillar h4{font-size:26px}
+html[lang=ka] .stat .l{font-size:18px}
+html[lang=ka] .hero h1{font-size:clamp(36px,4vw,58px)}
+html[lang=ka] .head h2,html[lang=ka] .mission h2,html[lang=ka] .news h2,html[lang=ka] .tech-hero h2{font-size:clamp(28px,3.1vw,46px)}
+html[lang=ka] .stat .v{font-size:clamp(34px,3.6vw,50px)}
+.menu a,.logo small,.nav-cta,.lang{white-space:nowrap}
+.topbar .wrap>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.menu{gap:2px}
+@media (max-width:1200px){html[lang=ka] .nav-cta{display:none}}
+
+.hero p.lead{font-size:18px;color:var(--muted);max-width:480px}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin:40px 0 48px}
+.social{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted)}
+.avatars{display:flex}
+.avatars span{width:38px;height:38px;border-radius:50%;margin-left:-10px;border:2px solid var(--bg);display:grid;place-items:center;font:700 11px "Space Grotesk";background:#16261E;color:var(--lime)}
+.avatars span:first-child{margin-left:0}
+.social b{color:var(--text);display:block;font-size:14px}
+
+.stage{position:relative;aspect-ratio:1/0.78;border-radius:32px;background:
+  radial-gradient(120% 80% at 50% 100%,rgba(183,244,95,.22),transparent 55%),
+  linear-gradient(180deg,#0F1D17,#08110D);border:1px solid var(--line);overflow:hidden}
+.stage .grid-floor{position:absolute;left:-20%;right:-20%;bottom:-10%;height:55%;background-image:linear-gradient(rgba(183,244,95,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(183,244,95,.12) 1px,transparent 1px);background-size:44px 44px;transform:perspective(500px) rotateX(62deg);mask-image:linear-gradient(transparent,#000 70%)}
+.stage .ring{position:absolute;left:50%;top:44%;width:78%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);border:1px solid rgba(183,244,95,.18)}
+.stage .ring.r2{width:56%;border-style:dashed;animation:spin 40s linear infinite}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.stage .car{position:absolute;left:4%;right:4%;bottom:17%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.6))}
+.stage .photo-bg{position:absolute;inset:-40px;width:calc(100% + 80px);height:calc(100% + 80px);object-fit:cover;filter:blur(28px) brightness(.45) saturate(1.2)}
+.stage .photo{position:absolute;left:0;right:0;top:50%;width:100%;height:auto;transform:translateY(-50%);z-index:1;transition:transform 1.2s ease;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.stage:hover .photo{transform:translateY(-50%) scale(1.03)}
+.stage::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,11,9,.55) 0%,transparent 30%,transparent 62%,rgba(6,11,9,.75) 100%),linear-gradient(90deg,rgba(183,244,95,.10),transparent 40%);pointer-events:none}
+.stage .tag,.stage .chip{z-index:2}
+.stage .tag{position:absolute;top:24px;left:24px;font:500 12px Inter;letter-spacing:.16em;color:var(--dim)}
+.chip{position:absolute;display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:16px;background:rgba(10,19,15,.78);backdrop-filter:blur(12px);border:1px solid var(--line2);font-size:12px;color:var(--muted);animation:float 6s ease-in-out infinite}
+.chip b{display:block;color:var(--text);font:600 18px/1.1 "Space Grotesk"}
+.chip .ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:rgba(183,244,95,.12);color:var(--lime)}
+.chip.c1{bottom:7%;right:5%}
+.chip.c2{bottom:7%;left:5%;animation-delay:-3s}
+@keyframes float{50%{transform:translateY(-10px)}}
+.battery{width:70px;height:6px;border-radius:9px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px}
+.battery i{display:block;height:100%;width:82%;background:linear-gradient(90deg,var(--lime2),var(--mint))}
+
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:22px;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.hero-stats div{padding:20px 22px;border-left:1px solid var(--line)}
+.hero-stats div:first-child{border-left:0}
+.hero-stats b{font:600 30px/1 "Space Grotesk";color:var(--lime)}
+.hero-stats b small{font-size:14px;margin-left:3px}
+.hero-stats span{display:block;font-size:12px;color:var(--dim);margin-top:8px}
+
+/* marquee */
+.marquee{border-block:1px solid var(--line);overflow:hidden;padding:22px 0;background:var(--bg2)}
+.marquee-track{display:flex;gap:48px;width:max-content;animation:scroll 32s linear infinite}
+.marquee span{font:600 clamp(22px,3vw,36px)/1 "Space Grotesk";letter-spacing:-.01em;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(238,245,240,.35)}
+.marquee span.f{color:var(--text);-webkit-text-stroke:0}
+.marquee em{color:var(--lime);font-style:normal;font-size:28px}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* sections */
+section{padding:120px 0}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;flex-wrap:wrap;margin-bottom:56px}
+.head h2{font-size:clamp(42px,5.6vw,76px);margin-top:20px}
+.head p{max-width:400px;color:var(--muted)}
+
+/* models */
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.filters{display:inline-flex;padding:5px;border-radius:999px;border:1px solid var(--line);background:var(--bg2)}
+.filters button{height:44px;padding:0 22px;border-radius:999px;font-size:14px;color:var(--muted);transition:.2s}
+.filters button.on{background:var(--lime);color:var(--ink);font-weight:600}
+.link{display:inline-flex;align-items:center;gap:8px;color:var(--lime);font-weight:600;font-size:14px}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.mcard{position:relative;border-radius:26px;background:var(--card);border:1px solid var(--line);overflow:hidden;transition:transform .35s,border-color .35s;text-align:left;display:flex;flex-direction:column}
+.mcard:hover{transform:translateY(-6px);border-color:rgba(183,244,95,.35)}
+.mcard.sel{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime),0 30px 60px -30px rgba(183,244,95,.4)}
+.mcard .vis{position:relative;height:230px;background:radial-gradient(80% 90% at 50% 100%,var(--glow),transparent 65%),#0B1511;display:flex;align-items:flex-end;padding:0 18px 22px}
+.mcard .vis{padding:0;overflow:hidden;height:auto;aspect-ratio:965/357}
+.mcard .vis img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .8s ease}
+.mcard:hover .vis img{transform:scale(1.04)}
+.mcard .vis::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(14,26,21,.95)),radial-gradient(80% 60% at 50% 110%,var(--glow),transparent 70%);pointer-events:none}
+.mcard .num,.badge{z-index:2}
+.mcard .num{color:#fff;background:rgba(6,11,9,.55);padding:4px 10px;border-radius:999px;backdrop-filter:blur(6px)}
+.mcard .num{position:absolute;top:20px;left:22px;font:500 13px "Space Grotesk";color:var(--dim)}
+.badge{position:absolute;top:18px;right:18px;padding:6px 12px;border-radius:999px;background:var(--lime);color:var(--ink);font:700 11px Inter;letter-spacing:.06em;text-transform:uppercase}
+.mcard .body{padding:24px 24px 26px;display:flex;flex-direction:column;gap:18px;flex:1}
+.mcard .row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.mcard .type{font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.12em}
+.mcard h3{font-size:30px;letter-spacing:-.01em;margin-top:6px}
+.price{text-align:right}
+.price b{font:600 22px/1 "Space Grotesk";color:var(--lime)}
+.price span{display:block;font-size:11px;color:var(--dim);margin-top:6px}
+.specs{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);padding-top:16px}
+.specs div{font-size:11px;color:var(--dim)}
+.specs b{display:block;font:600 17px "Space Grotesk";color:var(--text);margin-bottom:2px}
+.mcard.hide{display:none}
+
+.detail{margin-top:28px;border-radius:26px;border:1px solid var(--line);background:linear-gradient(135deg,#0F1E17,#0A130F);padding:30px;display:grid;grid-template-columns:260px 1fr;gap:30px;align-items:center}
+.detail h3{font-size:36px;margin-top:12px}
+.detail .tabs{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+.detail .tabs button{height:40px;padding:0 16px;border-radius:12px;border:1px solid var(--line2);font-size:13px;color:var(--muted)}
+.detail .tabs button.on{background:var(--lime);border-color:var(--lime);color:var(--ink);font-weight:600}
+.dstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.dstats div{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:18px;padding:20px}
+.dstats span{font-size:12px;color:var(--dim)}
+.dstats b{display:block;font:600 28px/1.1 "Space Grotesk";color:var(--lime);margin-top:8px}
+.meter{height:4px;border-radius:9px;background:rgba(255,255,255,.08);margin-top:14px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--lime);transition:width .7s cubic-bezier(.2,.8,.2,1)}
+
+/* data */
+.data{background:var(--bg2);border-block:1px solid var(--line)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line)}
+.stat{padding:40px 28px 44px;border-right:1px solid var(--line);position:relative;transition:background .3s}
+.stat:last-child{border-right:0}
+.stat:hover{background:rgba(183,244,95,.04)}
+.stat .n{font:500 13px "Space Grotesk";color:var(--lime);letter-spacing:.1em}
+.stat .l{font-size:14px;color:var(--muted);margin-top:40px}
+.stat .v{font:600 clamp(40px,4.4vw,60px)/1 "Space Grotesk";letter-spacing:-.03em;margin:12px 0 10px}
+.stat .v small{font-size:.45em;color:var(--muted);margin-left:6px;letter-spacing:0}
+.stat .s{font-size:12px;color:var(--dim)}
+.note{font-size:12px;color:var(--dim);margin-top:24px}
+
+/* tech */
+.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.tech-hero{grid-row:span 2;border-radius:28px;border:1px solid var(--line);background:radial-gradient(90% 70% at 30% 100%,rgba(92,242,196,.18),transparent 60%),linear-gradient(160deg,#0F1D17,#08110D);padding:40px;display:flex;flex-direction:column;justify-content:space-between;min-height:520px;overflow:hidden;position:relative}
+.tech-hero h2{font-size:clamp(44px,5vw,72px);margin-top:20px}
+.tech-hero p{color:var(--muted);max-width:380px;margin-top:20px}
+.tech-hero .tphoto{width:calc(100% + 80px);margin:40px -40px -40px;aspect-ratio:965/357;object-fit:cover;-webkit-mask-image:linear-gradient(180deg,transparent,#000 30%);mask-image:linear-gradient(180deg,transparent,#000 30%)}
+.feat{border-radius:28px;border:1px solid var(--line);background:var(--card);padding:32px;display:flex;flex-direction:column;gap:14px;transition:border-color .3s}
+.feat:hover{border-color:rgba(183,244,95,.3)}
+.feat .ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:rgba(183,244,95,.1);color:var(--lime);border:1px solid rgba(183,244,95,.25)}
+.feat h3{font-size:24px;letter-spacing:-.01em}
+.feat p{color:var(--muted);font-size:15px}
+.feat ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.feat li{font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--line2);color:var(--muted)}
+
+/* mission */
+.mission{background:var(--lime);color:var(--ink);position:relative;overflow:hidden}
+.mission::after{content:"";position:absolute;right:-180px;top:-180px;width:560px;height:560px;border-radius:50%;border:1px solid rgba(7,17,11,.15);box-shadow:0 0 0 80px rgba(7,17,11,.03),0 0 0 160px rgba(7,17,11,.025)}
+.mission-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
+.mission .eyebrow{color:var(--ink)}
+.mission .eyebrow::before{background:var(--ink);box-shadow:none}
+.mission h2{font-size:clamp(44px,5.6vw,80px);margin:22px 0 26px}
+.mission h2 span{color:#2E5A1F}
+.mission p{max-width:560px;font-size:17px;color:#24361C}
+.btn-dark{background:var(--ink);color:var(--lime);margin-top:36px}
+.btn-dark:hover{background:#000}
+.pillars{display:flex;flex-direction:column}
+.pillar{display:grid;grid-template-columns:64px 1fr;gap:10px;padding:24px 0;border-bottom:1px solid rgba(7,17,11,.2)}
+.pillar:first-child{border-top:1px solid rgba(7,17,11,.2)}
+.pillar b{font:600 28px/1 "Space Grotesk"}
+.pillar h4{font:600 18px "Space Grotesk"}
+.pillar p{font-size:14px;margin-top:4px}
+
+/* newsletter */
+.news{position:relative;overflow:hidden}
+.news::before{content:"";position:absolute;left:50%;top:0;width:900px;height:500px;transform:translateX(-50%);background:radial-gradient(circle,rgba(183,244,95,.1),transparent 60%)}
+.news-box{position:relative;border-radius:32px;border:1px solid var(--line);background:linear-gradient(160deg,#0F1D17,#08110D);padding:64px;display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center}
+.news h2{font-size:clamp(44px,5.4vw,76px);margin:20px 0 22px}
+.news p{color:var(--muted)}
+.form label{display:block;font-size:13px;color:var(--muted);margin-bottom:10px}
+.field{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 22px;border-radius:999px;border:1px solid var(--line2);background:rgba(0,0,0,.3);transition:border-color .2s}
+.field:focus-within{border-color:var(--lime)}
+.field input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--text);font:inherit;font-size:16px;height:48px}
+.field input::placeholder{color:var(--dim)}
+.field button{width:52px;height:52px;border-radius:50%;background:var(--lime);color:var(--ink);display:grid;place-items:center;flex:none;transition:.2s}
+.field button:hover{transform:rotate(45deg)}
+.msg{font-size:13px;margin-top:14px;min-height:20px;color:var(--dim)}
+.msg.ok{color:var(--lime)}
+.msg.err{color:#FF9F7A}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:56px 0 40px}
+.foot{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:40px}
+.foot h5{font:600 13px Inter;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:16px}
+.foot a{display:block;color:var(--muted);font-size:14px;padding:5px 0}
+.foot a:hover{color:var(--lime)}
+.foot p{color:var(--dim);font-size:14px;margin-top:18px;max-width:300px}
+.copy{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:48px;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
+.big{font:700 clamp(80px,17vw,250px)/.8 "Space Grotesk";letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1px rgba(183,244,95,.18);text-align:center;margin-top:50px;user-select:none}
+
+/* responsive */
+@media (max-width:1024px){
+  .menu,.nav-cta{display:none!important}.burger{display:grid}
+  .hero-grid,.mission-grid,.news-box,.tech-grid{grid-template-columns:1fr}
+  .tech-hero{grid-row:auto}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .detail{grid-template-columns:1fr}
+  .dstats{grid-template-columns:repeat(2,1fr)}
+  .foot{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .wrap{padding:0 20px}
+  section{padding:80px 0}
+  .topbar .hide-sm{display:none}
+  .cards{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid var(--line)}
+  .news-box{padding:36px 24px}
+  .chip.c2{display:none}
+  .hero-stats b{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- reusable car silhouette -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="car" viewBox="0 0 640 230">
+      <ellipse cx="320" cy="214" rx="290" ry="12" fill="#000" opacity=".55"/>
+      <path d="M36 158c0-22 16-34 46-39l92-12c40-36 92-58 166-58 64 0 108 16 150 48l76 14c30 6 40 22 40 44v12c0 7-5 12-12 12h-38a50 50 0 0 0-98 0H200a50 50 0 0 0-98 0H50c-8 0-14-6-14-14z" fill="url(#body)"/>
+      <path d="M196 108c32-30 76-46 132-46h8l6 46z" fill="#0B1A22" opacity=".92"/>
+      <path d="M358 62c42 2 76 16 104 40l-104 6z" fill="#0B1A22" opacity=".92"/>
+      <path d="M60 140h70M470 128l80 8" stroke="#5CF2C4" stroke-width="4" stroke-linecap="round"/>
+      <path d="M120 150l420-6" stroke="#ffffff" stroke-opacity=".16" stroke-width="2"/>
+      <g><circle cx="151" cy="180" r="40" fill="#0A0F0D"/><circle cx="151" cy="180" r="27" fill="none" stroke="#5CF2C4" stroke-width="3" opacity=".85"/><circle cx="151" cy="180" r="9" fill="#1C2A24"/></g>
+      <g><circle cx="489" cy="180" r="40" fill="#0A0F0D"/><circle cx="489" cy="180" r="27" fill="none" stroke="#5CF2C4" stroke-width="3" opacity=".85"/><circle cx="489" cy="180" r="9" fill="#1C2A24"/></g>
+      <path d="M360 120c6-10 14-14 22-12-2 10-10 16-22 12z" fill="#B7F45F"/>
+    </symbol>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F4F8F6"/><stop offset=".6" stop-color="#C9D3CE"/><stop offset="1" stop-color="#7E8C86"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="topbar">
+  <div class="wrap">
+    <span>● The next generation of electric mobility is here.</span>
+    <a href="#models" class="hide-sm">Discover ECONOVA
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="logo" aria-label="ECO DRIVER home">
+      <span class="logo-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B7F45F" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 19c0-8 5-14 15-15-1 10-7 15-15 15z"/><path d="M5 19 13 11"/></svg></span>
+      <span><b>ECO <span class="accent">DRIVER</span></b><small>DRIVE A CLEANER FUTURE</small></span>
+    </a>
+    <nav class="menu" aria-label="Main">
+      <a href="#top">Home</a><a href="#models">Automobiles</a><a href="#tech">Technology</a><a href="#mission">About us</a><a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-right">
+    <button class="lang" id="lang" aria-label="Switch language">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><span id="langLabel">ქარ</span></button>
+    <a href="#models" class="btn btn-ghost nav-cta">Choose your ECONOVA
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile" id="mobile" aria-label="Mobile">
+    <a href="#top">Home</a><a href="#models">Automobiles</a><a href="#tech">Technology</a><a href="#mission">About us</a><a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal">
+      <span class="eyebrow">The future is in motion</span>
+      <h1>The path to a<br><span class="accent">cleaner</span> future.</h1>
+      <p class="lead">Meet ECONOVA — an electric vehicle that combines distinctive design, smart technology and a completely new driving experience.</p>
+      <div class="hero-ctas">
+        <a href="#models" class="btn btn-lime">Discover ECONOVA
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <a href="#tech" class="btn btn-ghost">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg> Our vision</a>
+      </div>
+      <div class="social">
+        <div class="avatars"><span>EV</span><span>⚡︎</span><span>ECO</span></div>
+        <div><b>The movement is changing.</b>Your choice makes a difference.</div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="stage">
+        <img class="photo-bg" src="car.webp" alt="" aria-hidden="true">
+        <img class="photo" src="car.webp" alt="White ECONOVA electric car with blue accent lights">
+        <span class="tag">ECONOVA / CONCEPT 01</span>
+        <div class="chip c1"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="7" width="16" height="10" rx="2"/><path d="M21 11v2"/></svg></span><div>Battery<b>82%</b><div class="battery"><i></i></div></div></div>
+        <div class="chip c2"><span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span><div>Zero emissions<b>100% electric</b></div></div>
+      </div>
+      <div class="hero-stats">
+        <div><b>620<small>km</small></b><span>Range up to*</span></div>
+        <div><b>3.8<small>sec</small></b><span>0–100 km/h*</span></div>
+        <div><b>25<small>min</small></b><span>20–80% charge**</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="mq"></div>
+</div>
+
+<!-- MODELS -->
+<section id="models">
+  <div class="wrap">
+    <div class="head reveal">
+      <div><span class="eyebrow">Our models</span><h2>Your next adventure<br><span class="accent">is electric.</span></h2></div>
+      <p>Choose a model that fits your rhythm. Designed for everyday comfort and unforgettable rides.</p>
+    </div>
+    <div class="toolbar reveal">
+      <div class="filters" role="tablist" aria-label="Filter models">
+        <button class="on" data-f="all">All</button><button data-f="sport">Sports</button><button data-f="crossover">Crossover</button>
+      </div>
+      <a href="#detail" class="link">Compare models
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    </div>
+    <div class="cards" id="cards"></div>
+
+    <div class="detail reveal" id="detail">
+      <div>
+        <span class="eyebrow">Model details</span>
+        <h3 id="dName">ECONOVA S</h3>
+        <div class="tabs" id="dTabs"></div>
+      </div>
+      <div class="dstats" id="dStats"></div>
+    </div>
+  </div>
+</section>
+
+<!-- DATA -->
+<section class="data">
+  <div class="wrap">
+    <div class="head reveal">
+      <div><span class="eyebrow">Econova S / Data</span><h2>Impressive<br><span class="accent">in every detail.</span></h2></div>
+      <p>Conceptual technical data showing ECONOVA's vision for the future of electromobility.</p>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><div class="n">01</div><div class="l">Driving range</div><div class="v"><span data-count="620">0</span><small>km</small></div><div class="s">WLTP*</div></div>
+      <div class="stat"><div class="n">02</div><div class="l">Acceleration 0–100 km/h</div><div class="v"><span data-count="3.8" data-dec="1">0</span><small>sec</small></div><div class="s">Performance version</div></div>
+      <div class="stat"><div class="n">03</div><div class="l">Maximum power</div><div class="v"><span data-count="480">0</span><small>hp</small></div><div class="s">Dual electric motor</div></div>
+      <div class="stat"><div class="n">04</div><div class="l">Charging 20–80%</div><div class="v"><span data-count="25">0</span><small>min</small></div><div class="s">Approximately**</div></div>
+    </div>
+    <p class="note">* For illustrative/design purposes only; not certified specifications. ** Charging time depends on charger, temperature and battery condition.</p>
+  </div>
+</section>
+
+<!-- TECH -->
+<section id="tech">
+  <div class="wrap tech-grid">
+    <div class="tech-hero reveal">
+      <div>
+        <span class="eyebrow">Technology and innovation</span>
+        <h2>More than<br><span class="accent">electric.</span></h2>
+        <p>Every detail is designed to make your journey smoother, smarter and more efficient.</p>
+      </div>
+      <img class="tphoto" src="car.webp" alt="ECONOVA in front of solar panels and city skyline">
+    </div>
+    <div class="feat reveal">
+      <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+      <h3>Smart energy</h3>
+      <p>Efficient energy management and a fast-charging concept that learns your routes and plans every stop.</p>
+      <ul><li>Route-aware charging</li><li>Regenerative braking</li><li>800V ready</li></ul>
+    </div>
+    <div class="feat reveal">
+      <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span>
+      <h3>Connected cockpit</h3>
+      <p>An intuitive interface, over-the-air updates and driver assistance that keeps getting better over time.</p>
+      <ul><li>OTA updates</li><li>Voice control</li><li>Driver assist</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission" id="mission">
+  <div class="wrap mission-grid">
+    <div class="reveal">
+      <span class="eyebrow">Our mission</span>
+      <h2>We are creating a path<br><span>that cares about tomorrow.</span></h2>
+      <p>ECO DRIVER is a brand concept dedicated to electromobility. Our goal is to present cleaner, more modern and responsible mobility options — together with ECONOVA.</p>
+      <a href="#contact" class="btn btn-dark">Join us
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    </div>
+    <div class="pillars reveal">
+      <div class="pillar"><b>01</b><div><h4>Innovation</h4><p>Technology that serves people, not the other way round.</p></div></div>
+      <div class="pillar"><b>02</b><div><h4>Sustainability</h4><p>Cleaner energy and responsible materials at every step.</p></div></div>
+      <div class="pillar"><b>03</b><div><h4>Freedom</h4><p>Long range and fast charging, so the road stays open.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="news" id="contact">
+  <div class="wrap">
+    <div class="news-box reveal">
+      <div>
+        <span class="eyebrow">Stay connected</span>
+        <h2>The future<br><span class="accent">begins together.</span></h2>
+        <p>Leave us your email and receive news about ECONOVA and ECO DRIVER.</p>
+      </div>
+      <form class="form" id="form" novalidate>
+        <label for="email">Email address</label>
+        <div class="field">
+          <input id="email" type="email" placeholder="you@example.com" autocomplete="email">
+          <button type="submit" aria-label="Subscribe"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
+        </div>
+        <p class="msg" id="msg" aria-live="polite">By subscribing, you agree to receive news. This is a demo form.</p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#top" class="logo"><span class="logo-mark"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B7F45F" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 19c0-8 5-14 15-15-1 10-7 15-15 15z"/><path d="M5 19 13 11"/></svg></span><span><b>ECO <span class="accent">DRIVER</span></b><small>DRIVE A CLEANER FUTURE</small></span></a>
+        <p>A brand concept for cleaner, smarter and more responsible mobility.</p>
+      </div>
+      <div><h5>Models</h5><a href="#models">ECONOVA S</a><a href="#models">ECONOVA X</a><a href="#models">ECONOVA GT</a></div>
+      <div><h5>Company</h5><a href="#mission">About us</a><a href="#tech">Technology</a><a href="#contact">Contact</a></div>
+      <div><h5>Follow</h5><a href="#top">Instagram</a><a href="#top">Facebook</a><a href="#top">YouTube</a></div>
+    </div>
+    <div class="big" aria-hidden="true">ECONOVA</div>
+    <div class="copy"><span>© 2026 ECO DRIVER. Concept project.</span><span>Design & build — NexFlow</span></div>
+  </div>
+</footer>
+
+<script>
+/* ---------- i18n ---------- */
+const KA={
+"● The next generation of electric mobility is here.":"● ელექტრომობილობის ახალი ერა უკვე დაიწყო.",
+"Discover ECONOVA":"გაიცანი ECONOVA","DRIVE A CLEANER FUTURE":"სუფთა მომავლისკენ",
+"Home":"მთავარი","Automobiles":"მოდელები","Technology":"ტექნოლოგია","About us":"ჩვენ შესახებ","Contact":"კონტაქტი",
+"Choose your ECONOVA":"აირჩიე ECONOVA","The future is in motion":"მომავალი უკვე გზაზეა",
+"The path to a":"მართე","cleaner":"სუფთა","future.":"მომავალი.",
+"Meet ECONOVA — an electric vehicle that combines distinctive design, smart technology and a completely new driving experience.":"ECONOVA — ელექტრომობილი თამამი დიზაინით, ჭკვიანი ტექნოლოგიით და მართვის სრულიად ახალი შეგრძნებით.",
+"Our vision":"ჩვენი ხედვა","The movement is changing.":"მოძრაობა უკვე დაიწყო.","Your choice makes a difference.":"ყოველი კილომეტრი — ნული ემისიით.",
+"Battery":"ბატარეა","Zero emissions":"ნული ემისია","100% electric":"100% ელექტრო",
+"Range up to*":"სავალი მარაგი*","0–100 km/h*":"0–100 კმ/სთ*","20–80% charge**":"20–80% დამუხტვა**",
+"km":"კმ","sec":"წმ","min":"წთ","hp":"ცძ",
+"Our models":"მოდელები","Your next adventure":"შემდეგი მოგზაურობა","is electric.":"ელექტროთი.",
+"Choose a model that fits your rhythm. Designed for everyday comfort and unforgettable rides.":"სამი მოდელი — სამი ხასიათი. აირჩიე ის, რომელიც შენს რიტმს ერგება: ქალაქის ყოველდღიურობიდან გრძელ გზამდე.",
+"All":"ყველა","Sports":"სპორტული","Crossover":"კროსოვერი","Compare models":"შეადარე მოდელები","Model details":"დეტალები",
+"Econova S / Data":"Econova S / მონაცემები","Impressive":"ციფრები, რომლებიც","in every detail.":"თავად ლაპარაკობს.",
+"Conceptual technical data showing ECONOVA's vision for the future of electromobility.":"კონცეფციის ტექნიკური მონაცემები — როგორ ხედავს ECONOVA ელექტრომობილობის მომავალს.",
+"Driving range":"სავალი მარაგი","Acceleration 0–100 km/h":"აჩქარება 0–100 კმ/სთ","Maximum power":"მაქსიმალური სიმძლავრე","Charging 20–80%":"დამუხტვა 20–80%",
+"Performance version":"Performance ვერსიაში","Dual electric motor":"ორი ელექტროძრავა","Approximately**":"დაახლოებით**",
+"* For illustrative/design purposes only; not certified specifications. ** Charging time depends on charger, temperature and battery condition.":"* მონაცემები საილუსტრაციოა და არ არის სერტიფიცირებული. ** დამუხტვის დრო დამოკიდებულია დამტენზე, ტემპერატურასა და ბატარეის მდგომარეობაზე.",
+"Technology and innovation":"ტექნოლოგია","More than":"მეტი, ვიდრე","electric.":"უბრალოდ ელექტრო.",
+"Every detail is designed to make your journey smoother, smarter and more efficient.":"ყველა დეტალი ერთ მიზანს ემსახურება — მგზავრობა იყოს მშვიდი, ჭკვიანი და ეკონომიური.",
+"Smart energy":"ჭკვიანი ენერგია",
+"Efficient energy management and a fast-charging concept that learns your routes and plans every stop.":"სისტემა სწავლობს შენს მარშრუტებს და წინასწარ გეგმავს, სად და როდის დაიმუხტო.",
+"Route-aware charging":"დამუხტვის დაგეგმვა","Regenerative braking":"რეკუპერაცია","800V ready":"800V სისტემა",
+"Connected cockpit":"ციფრული სალონი",
+"An intuitive interface, over-the-air updates and driver assistance that keeps getting better over time.":"მარტივი ინტერფეისი, ონლაინ განახლებები და მძღოლის ასისტენტი, რომელიც დროთა განმავლობაში უკეთესი ხდება.",
+"OTA updates":"ონლაინ განახლება","Voice control":"ხმოვანი მართვა","Driver assist":"მძღოლის ასისტენტი",
+"Our mission":"ჩვენი მისია","We are creating a path":"ვქმნით გზას,","that cares about tomorrow.":"რომელიც ხვალინდელ დღეს უფრთხილდება.",
+"ECO DRIVER is a brand concept dedicated to electromobility. Our goal is to present cleaner, more modern and responsible mobility options — together with ECONOVA.":"ECO DRIVER ელექტრომობილობის ბრენდ-კონცეფციაა. ჩვენი მიზანია, ECONOVA-სთან ერთად სუფთა და თანამედროვე გადაადგილება ყველასთვის ხელმისაწვდომი გავხადოთ.",
+"Join us":"შემოგვიერთდი","Innovation":"ინოვაცია","Technology that serves people, not the other way round.":"ტექნოლოგია, რომელიც ადამიანისთვის მუშაობს.",
+"Sustainability":"მდგრადობა","Cleaner energy and responsible materials at every step.":"სუფთა ენერგია და გააზრებული მასალები.",
+"Freedom":"თავისუფლება","Long range and fast charging, so the road stays open.":"დიდი მარაგი და სწრაფი დამუხტვა — გზა არ მთავრდება.",
+"Stay connected":"დარჩი კავშირზე","The future":"მომავალი","begins together.":"ერთად იწყება.",
+"Leave us your email and receive news about ECONOVA and ECO DRIVER.":"დაგვიტოვე ელფოსტა და პირველმა გაიგე ECONOVA-ს სიახლეები.",
+"Email address":"ელფოსტა",
+"By subscribing, you agree to receive news. This is a demo form.":"გამოწერით ეთანხმები სიახლეების მიღებას. ფორმა სადემონსტრაციოა.",
+"A brand concept for cleaner, smarter and more responsible mobility.":"ელექტრომობილობის ბრენდ-კონცეფცია — სუფთა, ჭკვიანი და თანამედროვე გადაადგილებისთვის.",
+"Models":"მოდელები","Company":"კომპანია","Follow":"სოციალური ქსელები",
+"© 2026 ECO DRIVER. Concept project.":"© 2026 ECO DRIVER. საკონცეფციო პროექტი.","Design & build — NexFlow":"დიზაინი და დეველოპმენტი — NexFlow",
+"Sports sedan":"სპორტული სედანი","Electric crossover":"ელექტრო კროსოვერი","Performance":"Performance","Most popular":"პოპულარული","New model":"სიახლე",
+"Starting price":"საწყისი ფასი","0–100 km/h":"0–100 კმ/სთ","Range":"მარაგი","Power":"სიმძლავრე","Acceleration 0–100":"აჩქარება 0–100","s":"წმ",
+"Electric by nature":"ბუნებით ელექტრო","Drive the change":"შეცვალე გზა","Built for tomorrow":"ხვალისთვის შექმნილი",
+"Please enter a valid email address.":"შეიყვანე სწორი ელფოსტა.",
+"Thanks! You're on the list (demo — nothing was sent).":"მადლობა! სიაში ხარ (დემო — არაფერი გაგზავნილა)."
+};
+let lang='en';
+try{lang=localStorage.getItem('eco-lang')||'en'}catch(e){}
+const t=s=>lang==='ka'&&KA[s]?KA[s]:s;
+const orig=new WeakMap();
+function translateDom(){
+  const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentNode&&/SCRIPT|STYLE/.test(n.parentNode.nodeName)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  let n;
+  while(n=w.nextNode()){
+    if(!orig.has(n)){const k=n.nodeValue.trim();if(!k||!(k in KA))continue;orig.set(n,{k,raw:n.nodeValue})}
+    const o=orig.get(n);
+    n.nodeValue=lang==='ka'?o.raw.replace(o.k,KA[o.k]):o.raw;
+  }
+  document.getElementById('email').placeholder=lang==='ka'?'შენი ელფოსტა':'you@example.com';
+}
+
+/* ---------- models ---------- */
+const models=[
+  {id:'s',name:'ECONOVA S',type:'Sports sedan',cat:'sport',badge:'Most popular',price:'₾ 89,900',acc:3.8,range:620,hp:480,glow:'rgba(183,244,95,.28)',img:'car.webp'},
+  {id:'x',name:'ECONOVA X',type:'Electric crossover',cat:'crossover',badge:'New model',price:'₾ 96,500',acc:4.6,range:560,hp:420,glow:'rgba(92,242,196,.26)',img:'car-x.webp'},
+  {id:'gt',name:'ECONOVA GT',type:'Performance',cat:'sport',badge:'',price:'₾ 124,000',acc:3.2,range:590,hp:540,glow:'rgba(255,190,90,.22)',img:'car-gt.webp'}
+];
+let sel='s', filter='all';
+const cards=document.getElementById('cards'), tabs=document.getElementById('dTabs');
+function renderCards(){
+  cards.innerHTML=models.map((m,i)=>`
+  <button class="mcard reveal in${sel===m.id?' sel':''}${filter!=='all'&&m.cat!==filter?' hide':''}" data-id="${m.id}" style="--glow:${m.glow}" aria-label="${m.name}">
+    <div class="vis"><span class="num">0${i+1}</span>${m.badge?`<span class="badge">${t(m.badge)}</span>`:''}
+      <img src="${m.img}" alt="${m.name}" onerror="this.onerror=null;this.src='car.webp'"></div>
+    <div class="body">
+      <div class="row"><div><div class="type">${t(m.type)}</div><h3>${m.name}</h3></div>
+        <div class="price"><b>${m.price}</b><span>${t('Starting price')}</span></div></div>
+      <div class="specs"><div><b>${m.acc} ${t('s')}</b>${t('0–100 km/h')}</div><div><b>${m.range} ${t('km')}</b>${t('Range')}</div><div><b>${m.hp} ${t('hp')}</b>${t('Power')}</div></div>
+    </div>
+  </button>`).join('');
+}
+function renderDetail(){
+  const m=models.find(x=>x.id===sel);
+  document.getElementById('dName').textContent=m.name;
+  tabs.innerHTML=models.map(x=>`<button data-id="${x.id}" class="${x.id===sel?'on':''}">${x.name}</button>`).join('');
+  cards.querySelectorAll('.mcard').forEach(c=>c.classList.toggle('sel',c.dataset.id===sel));
+  const pct=(v,max)=>Math.round(v/max*100);
+  document.getElementById('dStats').innerHTML=`
+    <div><span>${t('Driving range')}</span><b>${m.range} ${t('km')}</b><div class="meter"><i style="width:${pct(m.range,700)}%"></i></div></div>
+    <div><span>${t('Acceleration 0–100')}</span><b>${m.acc} ${t('sec')}</b><div class="meter"><i style="width:${pct(6-m.acc,3.5)}%"></i></div></div>
+    <div><span>${t('Power')}</span><b>${m.hp} ${t('hp')}</b><div class="meter"><i style="width:${pct(m.hp,600)}%"></i></div></div>
+    <div><span>${t('Starting price')}</span><b>${m.price}</b><div class="meter"><i style="width:${pct(parseInt(m.price.replace(/\D/g,'')),140000)}%"></i></div></div>`;
+}
+cards.addEventListener('click',e=>{const c=e.target.closest('.mcard');if(!c)return;sel=c.dataset.id;renderDetail();document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'center'})});
+tabs.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;sel=b.dataset.id;renderDetail()});
+document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{
+  filter=b.dataset.f;
+  document.querySelectorAll('.filters button').forEach(x=>x.classList.toggle('on',x===b));
+  cards.querySelectorAll('.mcard').forEach(c=>{const m=models.find(x=>x.id===c.dataset.id);c.classList.toggle('hide',filter!=='all'&&m.cat!==filter)});
+}));
+
+/* ---------- marquee ---------- */
+function renderMarquee(){
+  const words=['Electric by nature','Drive the change','ECONOVA','Zero emissions','Built for tomorrow'];
+  const one=words.map((w,i)=>`<span class="${i%2?'':'f'}">${t(w)}</span><em>✳</em>`).join('');
+  document.getElementById('mq').innerHTML=one+one+one+one;
+}
+
+/* ---------- language switch ---------- */
+function applyLang(){
+  document.documentElement.lang=lang==='ka'?'ka':'en';
+  document.getElementById('langLabel').textContent=lang==='ka'?'ENG':'ქარ';
+  renderCards();renderDetail();renderMarquee();translateDom();
+}
+document.getElementById('lang').addEventListener('click',()=>{
+  lang=lang==='ka'?'en':'ka';
+  try{localStorage.setItem('eco-lang',lang)}catch(e){}
+  applyLang();
+});
+applyLang();
+
+/* ---------- mobile menu ---------- */
+const burger=document.getElementById('burger'),mob=document.getElementById('mobile');
+burger.addEventListener('click',()=>{const o=mob.classList.toggle('open');burger.setAttribute('aria-expanded',o)});
+mob.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mob.classList.remove('open');burger.setAttribute('aria-expanded',false)}));
+
+/* ---------- reveal + counters ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  e.target.classList.add('in');
+  e.target.querySelectorAll('[data-count]').forEach(el=>{
+    const end=parseFloat(el.dataset.count),dec=+el.dataset.dec||0,t0=performance.now();
+    const step=tm=>{const p=Math.min((tm-t0)/1400,1),v=end*(1-Math.pow(1-p,3));el.textContent=v.toFixed(dec);if(p<1)requestAnimationFrame(step)};
+    requestAnimationFrame(step);
+  });
+  io.unobserve(e.target);
+}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- form ---------- */
+document.getElementById('form').addEventListener('submit',e=>{
+  e.preventDefault();
+  const v=document.getElementById('email').value.trim(),msg=document.getElementById('msg');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){msg.className='msg err';msg.textContent=t('Please enter a valid email address.');return}
+  msg.className='msg ok';msg.textContent=t("Thanks! You're on the list (demo — nothing was sent).");
+  e.target.reset();
+});
+</script>
+</body>
+</html>
